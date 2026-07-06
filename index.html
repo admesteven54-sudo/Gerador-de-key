@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GERADOR DE KEY MARCOS</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0a0a0a;color:#fff;text-align:center;padding:20px}
+h1{color:#00ff88;font-size:28px;margin-bottom:5px}
+h3{color:#00ff88}
+.card{background:#121212;padding:20px;border-radius:12px;margin:20px auto;max-width:400px;border:1px solid #00ff88}
+input,button{width:90%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #00ff88;background:#000;color:#fff;font-size:16px}
+button{background:#00ff88;color:#000;font-weight:bold;cursor:pointer}
+button:active{transform:scale(0.97)}
+#fato{background:#0a0a0a;padding:15px;border-radius:10px;margin:15px 0;border:1px solid #00ff88}
+#fatoTexto{color:#ccc;font-size:14px}
+#keyGerada{background:#000;color:#00ff88;font-weight:bold;font-size:18px;letter-spacing:2px}
+</style>
+</head>
+<body>
+
+<h1>GERADOR DE KEY</h1>
+<p style="color:#888;font-size:12px">VERSÃO PRO 1.0 - MARCOS</p>
+
+<div class="card" id="login">
+  <h3>LOGIN</h3>
+  <input id="key" placeholder="Cole sua KEY aqui">
+  <button onclick="entrar()">ENTRAR</button>
+  
+  <hr style="border:1px solid #222;margin:15px 0">
+  
+  <h3>GERADOR DE KEY</h3>
+  <input id="keyGerada" readonly placeholder="Sua KEY vai aparecer aqui">
+  <button onclick="gerarKey()">GERAR KEY</button>
+  <button onclick="copiarKey()">COPIAR KEY</button>
+</div>
+
+<div class="card" id="painel" style="display:none">
+  <h3>PAINEL PRO</h3>
+  
+  <div id="fato">
+    <h4 style="margin-bottom:8px">💡 FATO DO DIA</h4>
+    <p id="fatoTexto"></p>
+    <button onclick="novoFato()" style="font-size:12px;padding:8px;width:100%;margin-top:10px;background:#222;color:#00ff88">NOVO FATO</button>
+  </div>
+
+  <button onclick="alert('MIRA LEVE ATIVADA! DPI 800')">MIRA LEVE</button>
+  <button onclick="alert('SENSI ALEATÓRIA GERADA!')">GERAR SENSI</button>
+  <button onclick="alert('CELULAR OTIMIZADO! +40% FPS')">OTIMIZAR</button>
+</div>
+
+<script>
+const fatos = [
+  "GERADOR DE KEY aumenta sua sensi em até 40%",
+  "Use DPI 800 + GERADOR DE KEY = Mira mais leve",
+  "Limpe a RAM antes de abrir o jogo pra 0 LAG",
+  "Mais de 10.000 players usam o painel",
+  "Ative modo avião + Painel = Mais FPS",
+  "DPI ideal para mira: 400 a 800",
+  "Feche apps em segundo plano antes de jogar"
+];
+
+function novoFato(){
+  document.getElementById('fatoTexto').innerText = fatos[Math.floor(Math.random() * fatos.length)];
+}
+novoFato();
+
+function gerarKey(){
+  let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let key = 'GKEY-';
+  for(let i=0; i<12; i++){
+    key += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  document.getElementById('keyGerada').value = key;
+}
+
+function copiarKey(){
+  let key = document.getElementById('keyGerada');
+  key.select();
+  document.execCommand('copy');
+  alert('KEY COPIADA!');
+}
+
+function entrar(){
+  let k = document.getElementById('key').value;
+  if(k.length > 3){
+    document.getElementById('login').style.display='none';
+    document.getElementById('painel').style.display='block';
+  }else{
+    alert('KEY INVÁLIDA! Gere uma key primeiro')
+  }
+}
+</script>
+</body>
+  </html>
