@@ -2,35 +2,40 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel VIP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>GERADOR VIP</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,Arial}
-  body{background:#0a0a0a;color:#fff;padding:20px}
-  .card{background:#151515;border:1px solid #2a2a2a;padding:20px;border-radius:15px;max-width:500px;margin:20px auto}
-  h1{color:#00ff88;text-align:center;margin-bottom:15px}
-  input,select{width:100%;padding:12px;margin:8px 0;border:none;border-radius:10px;background:#222;color:#fff;font-size:15px}
-  button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:10px;background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;font-weight:bold;font-size:15px;cursor:pointer}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial}
+  body{background:#0a0a0a;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
+  .card{background:#151515;border:1px solid #2a2a2a;padding:25px;border-radius:20px;width:100%;max-width:420px;text-align:center}
+  h1{color:#00ff88;font-size:22px;margin-bottom:8px}
+  p{color:#aaa;font-size:14px;margin-bottom:15px}
+  input,select{width:100%;padding:14px;margin:8px 0;border:none;border-radius:12px;background:#222;color:#fff;font-size:16px;outline:none}
+  button{width:100%;padding:14px;margin-top:12px;border:none;border-radius:12px;background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;font-weight:bold;font-size:16px;cursor:pointer}
+  button:active{transform:scale(0.96)}
   button.red{background:#ff4444;color:#fff}
-  .key-box{background:#222;padding:12px;border-radius:10px;margin:10px 0;word-break:break-all;border:1px solid #333}
+  .key-box{background:#222;padding:16px;border-radius:12px;margin:10px 0;word-break:break-all;border:1px dashed #00ff88;font-size:16px;font-weight:bold;letter-spacing:1px}
   .banida{border-color:#ff4444;background:#2a1111}
   #login{display:block} #painel{display:none}
-  .info{font-size:12px;color:#aaa}
+  .info{font-size:12px;color:#00ff88;margin-top:5px}
+  hr{border:none;border-top:1px solid #333;margin:20px 0}
 </style>
 </head>
 <body>
 
 <div class="card" id="login">
-  <h1>🔒 PAINEL ADMIN</h1>
-  <input type="password" id="senha" placeholder="Senha">
+  <h1>⚡ GERADOR VIP</h1>
+  <p>Digite a senha para acessar</p>
+  <input type="password" id="senha" placeholder="Senha" autocomplete="off">
   <button onclick="entrar()">ENTRAR</button>
-  <p id="erro" style="color:#ff4444;display:none;text-align:center">Senha errada!</p>
+  <p id="erro" style="color:#ff4444;display:none;margin-top:10px">Senha incorreta!</p>
 </div>
 
 <div class="card" id="painel">
   <h1>⚡ GERADOR VIP</h1>
+  <p>Gere keys ilimitadas</p>
   
-  <label>Tempo da Key:</label>
+  <label style="text-align:left;display:block;color:#aaa;font-size:13px">Tempo da Key:</label>
   <select id="tempo">
     <option value="1h">1 Hora</option>
     <option value="1d">1 Dia</option>
@@ -41,19 +46,19 @@
   <button onclick="gerarKey()">GERAR NOVA KEY</button>
   
   <div id="resultado" style="display:none;">
+    <p style="margin-top:15px;">Sua Key:</p>
     <div class="key-box" id="key"></div>
-    <button onclick="copiar()">📋 COPIAR</button>
+    <button onclick="copiar()">📋 COPIAR KEY</button>
     <p class="info" id="infoKey"></p>
   </div>
 
-  <hr style="margin:20px 0;border-color:#333">
+  <hr>
   
   <h1>🚫 BANIR KEY</h1>
   <input type="text" id="banInput" placeholder="Cole a key aqui para banir">
   <button class="red" onclick="banirKey()">BANIR KEY</button>
   
-  <h3 style="margin-top:15px;">Keys Banidas:</h3>
-  <div id="listaBan"></div>
+  <div id="listaBan" style="margin-top:15px;text-align:left"></div>
 </div>
 
 <script>
@@ -72,21 +77,22 @@ function entrar(){
 
 function gerarKey(){
   let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let key = "VIP-";
+  let key = "";
   for(let i=0; i<16; i++){
     key += chars.charAt(Math.floor(Math.random() * chars.length));
     if((i+1)%4==0 && i!=15) key += "-";
   }
   
   let tempo = document.getElementById("tempo").value;
-  let expira = "";
-  if(tempo == "1h") expira = "Expira em 1 Hora";
-  if(tempo == "1d") expira = "Expira em 1 Dia";
-  if(tempo == "30d") expira = "Expira em 30 Dias";
-  if(tempo == "perm") expira = "Permanente";
+  let tempoTxt = "";
+  if(tempo == "1h") tempoTxt = "Expira em 1 Hora";
+  if(tempo == "1d") tempoTxt = "Expira em 1 Dia";
+  if(tempo == "30d") tempoTxt = "Expira em 30 Dias";
+  if(tempo == "perm") tempoTxt = "Permanente";
   
-  document.getElementById("key").innerText = key + "|" + tempo;
-  document.getElementById("infoKey").innerText = expira;
+  let keyFinal = "VIP-" + key + "|" + tempo;
+  document.getElementById("key").innerText = keyFinal;
+  document.getElementById("infoKey").innerText = tempoTxt;
   document.getElementById("resultado").style.display = "block";
 }
 
@@ -107,9 +113,13 @@ function banirKey(){
 
 function mostrarBanidas(){
   let div = document.getElementById("listaBan");
-  div.innerHTML = "";
+  if(keysBanidas.length == 0){
+    div.innerHTML = "<p style='color:#666;font-size:12px'>Nenhuma key banida</p>";
+    return;
+  }
+  div.innerHTML = "<p style='color:#aaa;font-size:13px;margin-bottom:8px'>Keys Banidas:</p>";
   keysBanidas.forEach(k => {
-    div.innerHTML += `<div class="key-box banida">${k} <button class="red" style="width:auto;padding:5px 10px;float:right" onclick="desbanir('${k}')">Desbanir</button></div>`;
+    div.innerHTML += `<div class="key-box banida" style="font-size:12px">${k} <button class="red" style="width:auto;padding:5px 10px;float:right;font-size:12px" onclick="desbanir('${k}')">Desbanir</button></div>`;
   });
 }
 
@@ -121,4 +131,4 @@ function desbanir(k){
 </script>
 
 </body>
- </html>
+</html>
