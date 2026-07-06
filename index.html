@@ -6,34 +6,33 @@
 <title>Painel Privado</title>
 <style>
   body { background:#111; color:#fff; font-family:Arial; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
-  #login, #painel { background:#222; padding:30px; border-radius:10px; text-align:center; }
-  input { padding:10px; width:200px; border:none; border-radius:5px; margin-top:10px; }
-  button { padding:10px 20px; margin-top:15px; border:none; border-radius:5px; background:#00ff88; color:#000; font-weight:bold; cursor:pointer; }
+  #login, #painel { background:#222; padding:30px; border-radius:10px; text-align:center; width:300px; }
+  input { padding:10px; width:90%; border:none; border-radius:5px; margin-top:10px; }
+  button { padding:10px 20px; margin-top:15px; border:none; border-radius:5px; background:#00ff88; color:#000; font-weight:bold; cursor:pointer; width:95%; }
   #painel { display:none; }
 </style>
 </head>
 <body>
 
 <div id="login">
-  <h2>ACESSO PRIVADO</h2>
-  <p>Digite a senha para entrar</p>
+  <h2>ACESSO PRIVADO 🔒</h2>
+  <p>Digite a senha</p>
   <input type="password" id="senha" placeholder="Senha">
-  <br>
   <button onclick="entrar()">ENTRAR</button>
-  <p id="erro" style="color:red; display:none;">Senha incorreta!</p>
+  <p id="erro" style="color:red; display:none; margin-top:10px;">Senha incorreta!</p>
 </div>
 
 <div id="painel">
-  <h2>Bem vindo ao Gerador de Key 🔥</h2>
-  <p>Aqui vai o seu gerador...</p>
+  <h2>Bem vindo ao Gerador 🔥</h2>
+  <p>Seu gerador de key vai aqui</p>
 </div>
 
 <script>
-const SENHA_CORRETA = "marcoskey444"; // <-- SUA SENHA NOVA
+const SENHA_CORRETA = "marcoskey444";
 
 function entrar() {
-  const senhaDigitada = document.getElementById("senha").value;
-  if (senhaDigitada === SENHA_CORRETA) {
+  let senhaDigitada = document.getElementById("senha").value;
+  if (senhaDigitada == SENHA_CORRETA) {
     document.getElementById("login").style.display = "none";
     document.getElementById("painel").style.display = "block";
   } else {
