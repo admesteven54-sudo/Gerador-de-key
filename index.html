@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Gerador VIP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial}
+  body{background:#0a0a0a;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
+  .card{background:#151515;border:1px solid #2a2a2a;padding:25px;border-radius:20px;width:100%;max-width:420px;text-align:center}
+  h1{color:#00ff88;font-size:24px;margin-bottom:8px}
+  p{color:#aaa;font-size:14px;margin-bottom:20px}
+  input{width:100%;padding:14px;margin:10px 0;border:none;border-radius:12px;background:#222;color:#fff;font-size:16px;outline:none}
+  button{width:100%;padding:14px;margin-top:12px;border:none;border-radius:12px;background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;font-weight:bold;font-size:16px;cursor:pointer}
+  button:active{transform:scale(0.96)}
+  .key-box{background:#222;padding:16px;border-radius:12px;margin-top:15px;word-break:break-all;border:1px dashed #00ff88;font-size:18px;font-weight:bold;letter-spacing:1px}
+  #erro{color:#ff5555;margin-top:10px;display:none;font-size:14px}
+  #painel{display:none}
+  .copy-msg{color:#00ff88;font-size:12px;margin-top:8px;display:none}
+</style>
+</head>
+<body>
+
+<div class="card" id="login">
+  <h1>🔒 ACESSO VIP</h1>
+  <p>Digite a senha para acessar</p>
+  <input type="password" id="senha" placeholder="Senha" autocomplete="off">
+  <button onclick="entrar()">ENTRAR</button>
+  <p id="erro">Senha incorreta!</p>
+</div>
+
+<div class="card" id="painel">
+  <h1>⚡ GERADOR VIP</h1>
+  <p>Gere keys ilimitadas</p>
+  <button onclick="gerarKey()">GERAR NOVA KEY</button>
+  <div id="resultado" style="display:none;">
+    <p style="margin-top:15px;color:#aaa;">Sua Key:</p>
+    <div class="key-box" id="key"></div>
+    <button onclick="copiar()">📋 COPIAR KEY</button>
+    <p class="copy-msg" id="copiado">Copiado!</p>
+  </div>
+</div>
+
+<script>
+const SENHA_CORRETA = "marcoskey444";
+
+function entrar(){
+  let s = document.getElementById("senha").value;
+  if(s == SENHA_CORRETA){
+    document.getElementById("login").style.display = "none";
+    document.getElementById("painel").style.display = "block";
+  }else{
+    document.getElementById("erro").style.display = "block";
+  }
+}
+
+function gerarKey(){
+  let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let key = "";
+  for(let i=0; i<16; i++){
+    key += chars.charAt(Math.floor(Math.random() * chars.length));
+    if((i+1)%4==0 && i!=15) key += "-";
+  }
+  document.getElementById("key").innerText = "VIP-" + key;
+  document.getElementById("resultado").style.display = "block";
+  document.getElementById("copiado").style.display = "none";
+}
+
+function copiar(){
+  let txt = document.getElementById("key").innerText;
+  navigator.clipboard.writeText(txt);
+  document.getElementById("copiado").style.display = "block";
+  setTimeout(()=>{document.getElementById("copiado").style.display="none"},2000);
+}
+</script>
+
+</body>
+</html>
